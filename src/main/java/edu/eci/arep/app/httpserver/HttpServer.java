@@ -1,10 +1,8 @@
 package edu.eci.arep.app.httpserver;
 
-import edu.eci.arep.app.springpro.RequestSpringPro;
+import edu.eci.arep.app.springpro.SpringResponse;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
@@ -20,8 +18,11 @@ import java.util.logging.Logger;
  */
 public class HttpServer {
     private static final HttpServer _instance = new HttpServer();
+    private SpringResponse up;
     public HttpServer(){}
-
+    public HttpServer(SpringResponse uri) {
+        this.up = uri;
+    }
     /*
     *   Método que inicializa el servidor
     * */
@@ -112,7 +113,6 @@ public class HttpServer {
                 URI uri = null;
                 try {
                     uri = new URI(path);
-                    System.out.println("PATHHHHHHHHHHH"+uri.getPath().replace("/Apps",""));
                     getSpringResponse(uri.getPath().replace("/Apps",""), printWriter);
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
@@ -160,31 +160,10 @@ public class HttpServer {
     }
 
     private void getSpringResponse(String nameuri, PrintWriter out)  throws Exception {
-        String newUri = nameuri.substring( 1 );
-        System.out.println(nameuri);
-        String response = "";
-        try{
-            Class component  = Class.forName( newUri );
-            for ( Method m : component.getMethods()) {
-                if (m.isAnnotationPresent( RequestSpringPro.class)) {
-                        RequestSpringPro rm = m.getAnnotation(RequestSpringPro.class);
-                        response= m.invoke(null).toString();
-                    System.out.println(response);
-                }
-            }
-        } catch (IllegalAccessException e) {
-            Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, e);
-        } catch (IllegalArgumentException e) {
-            Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, e);
-        } catch (InvocationTargetException e) {
-            Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, e);
-        }
+        String response = up.executeService(nameuri);
         String header = "HTTP/1.1 200 OK\r\n"
-
                 + "Content-Type: text/html\r\n"
-
                 + "\r\n";
         out.println(header + response);
     }
-
 }

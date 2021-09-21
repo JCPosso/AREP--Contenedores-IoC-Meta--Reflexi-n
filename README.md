@@ -35,7 +35,7 @@ mvn package
 ```
 Si desea ejecutar el programa desde línea de comandos **(En Windows)** puede usar las siguientes instrucciones:
 ```
-java -cp target/classes;target/dependency/* edu.eci.arep.app.app
+java -cp target/classes edu.eci.arep.app.springpro.App edu.eci.arep.app.springpro.testComponent.Controller
 ```
 
 ##Despliegue en HEROKU de manera local
@@ -45,30 +45,34 @@ Heroku local web
 ```
 Una vez iniciado el driver de conexión se ejecutará el servidor web desplegado en heroku para ello nuestra ruta de ejecución será:
 ```
-http://localhost:5000.
+http://localhost:36000.
 ```
 
 ### App server
 
-![principal](img/principal.PNG)
+![principal](img/html.png)
 
 A continuación se presentan las distintas respuestas generadas por el servidor
 
 - HTML
 
-![html](img/html.PNG)
+![html](img/html.png)
 
 - CSS
 
-![css](img/css.PNG)
+![css](img/css.png)
 
 - JS
 
-![javascript](img/javascript.PNG)
+![javascript](img/javascript.png)
 
 - Imagenes
 
-![Imagen](img/imagen.PNG)
+![Imagen](img/imagen.png)
+
+## Framework
+- prueba
+![Prueba](img/prueba.png)
 
 ## Autor
 [Juan Camilo Posso Guevara](https://github.com/JCPosso)
